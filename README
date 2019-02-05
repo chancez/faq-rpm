@@ -1,0 +1,70 @@
+# faq-rpm
+
+Supports building https://github.com/jzelinskie/faq as an srpm/rpm
+
+## Building:
+
+
+### rpmbuild
+
+Requirements:
+
+- [rpmbuild](http://rpm.org/download.html)
+- gcc, make
+- go >= 1.11
+- jq-devel >= 1.6
+
+First fetch the sources for `faq` for the SRPM to build:
+
+Using spec tool (available via rpmdev-tools package):
+
+```
+spectool -g -R faq.spec
+```
+
+You can also download it them directly via rpmbuild:
+
+```
+rpmbuild --undefine=_disable_source_fetch -bp faq.spec
+```
+
+
+Build the source rpm, and binary:
+
+```
+rpmbuild -ba faq.spec
+```
+
+If you want to build just the source RPM:
+
+```
+rpmbuild -bs faq.spec
+```
+
+
+### Mock
+
+Using mock has advantages over calling rpmbuild directly, like running in an
+isolated chroot, and the fact that it installs all the build dependencies for
+the RPM automatically.
+
+Requirements:
+
+- [mock](https://github.com/rpm-software-management/mock)
+- [rpmbuild](http://rpm.org/download.html)
+
+
+First, download the sources, and build the srpm using the instructions above.
+
+Then use mock to build the rpm:
+
+```
+mock --enable-network --rebuild $HOME/rpmbuild/SRPMS/faq-0.0.4-1.fc29.src.rpm
+```
+
+If you want to build for different OS versions, pass the `-r` flag to change
+the profile used to make the chroot:
+
+```
+mock -r epel-7-x86_64 --enable-network --rebuild $HOME/rpmbuild/SRPMS/faq-0.0.4-1.fc29.src.rpm
+```
