@@ -44,5 +44,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/%{name}
 
 %changelog
-* Tue Jan 29 2019 Chance Zibolski <czibolsk@redhat.com> 0.0.4-1
+* Tue Feb 5 2019 Chance Zibolski <czibolsk@redhat.com> 0.0.4-1
 - First faq package
