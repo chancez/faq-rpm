@@ -8,15 +8,16 @@
 
 Name:       faq
 Version:    0.0.4
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    Command-line JSON/YAML/XML/TOML/BSON processor
 License:    Apache 2.0
 URL:        https://github.com/jzelinskie/faq
-Source0:    https://github.com/jzelinskie/faq/archive/%{version}.tar.gz
+# use a fork of the upstream which has vendored copies of it's dependencies and doesn't require go 1.11
+Source0:    https://github.com/chancez/faq/archive/%{version}-2_go1_10.tar.gz
 
 BuildRequires: gcc
 BuildRequires: make
-BuildRequires: golang >= 1.11
+BuildRequires: golang >= 1.10
 BuildRequires: oniguruma-devel
 BuildRequires: jq-devel >= 1.6
 %if %{without static}
@@ -29,11 +30,15 @@ ExclusiveArch: x86_64
 Format Agnostic jQ
 
 %prep
-%autosetup
+%autosetup -n %{name}-%{version}-2_go1_10
 
 %build
-
-%make_build SKIP_VALIDATE=true FAQ_LINK_STATIC=%{build_static} GO_LD_FLAGS='-compressdwarf=false -linkmode external -extldflags "-v"'
+mkdir -p ./go/src/github.com/jzelinskie
+ln -s $(pwd) ./go/src/github.com/jzelinskie/faq
+export GOPATH=$(pwd)/go
+pushd ./go/src/github.com/jzelinskie/faq
+%make_build SKIP_VALIDATE=true FAQ_LINK_STATIC=%{build_static} GO_LD_FLAGS='-linkmode external -extldflags "-v"'
+popd
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -44,5 +49,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/%{name}
 
 %changelog
+* Tue Feb 5 2019 Chance Zibolski <czibolsk@redhat.com> 0.0.4-2
+- Modified Source to use fork of faq with vendored dependencies, and supports go 1.10
+
 * Tue Feb 5 2019 Chance Zibolski <czibolsk@redhat.com> 0.0.4-1
 - First faq package
