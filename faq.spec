@@ -30,7 +30,7 @@ ExclusiveArch: x86_64
 Format Agnostic jQ
 
 %prep
-%autosetup -n %{name}-%{version}-2_go1_10
+%autosetup -n %{name}-%{version}-1_go1_10
 
 %build
 mkdir -p ./go/src/github.com/jzelinskie
