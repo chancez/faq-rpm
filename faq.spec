@@ -7,13 +7,13 @@
 %endif
 
 Name:       faq
-Version:    0.0.4
-Release:    2%{?dist}
+Version:    0.0.5
+Release:    1%{?dist}
 Summary:    Command-line JSON/YAML/XML/TOML/BSON processor
 License:    Apache 2.0
 URL:        https://github.com/jzelinskie/faq
 # use a fork of the upstream which has vendored copies of it's dependencies and doesn't require go 1.11
-Source0:    https://github.com/chancez/faq/archive/%{version}-2_go1_10.tar.gz
+Source0:    https://github.com/chancez/faq/archive/%{version}-1_go1_10.tar.gz
 
 BuildRequires: gcc
 BuildRequires: make
@@ -49,6 +49,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/%{name}
 
 %changelog
+* Mon Feb 11 2019 Chance Zibolski <czibolsk@redhat.com> 0.0.5-1
+- Update to 0.0.5
+
 * Tue Feb 5 2019 Chance Zibolski <czibolsk@redhat.com> 0.0.4-2
 - Modified Source to use fork of faq with vendored dependencies, and supports go 1.10
 
