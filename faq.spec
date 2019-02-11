@@ -7,7 +7,7 @@
 %endif
 
 Name:       faq
-Version:    0.0.4
+Version:    0.0.5
 Release:    1%{?dist}
 Summary:    Command-line JSON/YAML/XML/TOML/BSON processor
 License:    Apache 2.0
@@ -44,5 +44,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/%{name}
 
 %changelog
+* Mon Feb 11 2019 Chance Zibolski <czibolsk@redhat.com> 0.0.5-1
+- Update to 0.0.5
+
 * Tue Feb 5 2019 Chance Zibolski <czibolsk@redhat.com> 0.0.4-1
 - First faq package
